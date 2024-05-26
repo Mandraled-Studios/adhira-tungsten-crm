@@ -1,0 +1,83 @@
+models:
+  Client:
+    company_name: string:255			
+    firm_type: string:255			
+    pan_number: string:15					
+    client_code: string:32 nullable	
+    client_name: string:128 nullable		
+    aadhar_number: string:12 nullable			
+    mobile: string:15 nullable			
+    whatsapp: string:15 nullable			
+    email: string:234 nullable			
+    alternate_email: string:254 nullable			
+    website: string:128 nullable			
+    address: string:255 nullable			
+    city: string:64 nullable			
+    state: string:64 nullable			
+    country: string:64 nullable			
+    pincode: string:10 nullable			
+    tan_no: string:20 nullable			
+    cin_no: string:20 nullable			
+    gstin: string:16 nullable			
+    auditor_group_id: id foreign:users
+    billing_at: string:128 nullable default:"Adhira Associates"
+    client_status: enum:active,inactive
+    SoftDeletes
+
+  TaskType:
+    name: string
+    frequency: string
+    SoftDeletes
+
+  Task:
+    code: string:10									
+    assessment_year: string:30			
+    status:	enum:"Assigned", "In Progress", "On Hold" ,"Waiting to Invoice", "Completed"			
+    duedate: datetime		
+    assigned_user_id:	unsignedBigInteger:20	
+    frequency_override: string:128 nullable
+    billing_value: decimal:8,2 nullable default:0
+    billing_company: enum:"Adhira Associates", "Perfect Tax Consultancy"
+    SoftDeletes
+    relationships:
+        belongsTo: TaskType, Client
+        hasMany: TaskCheckpoint
+
+  TaskCheckpoint:
+    SoftDeletes
+    relationships:
+        belongsTo: Task, User
+        hasOne: WorkLog
+
+  WorkLog:
+    message: text
+    SoftDeletes
+    relationships:
+        belongsTo: TaskCheckpoint
+
+  Invoice:
+    invoice_number: string
+    invoice_date: date
+    duedate: date
+    subtotal: decimal:8,2
+    tax1: decimal:8,2
+    tax2: decimal:8,2
+    total: decimal:8,2
+    tax1_label: enum:cgst, igst, sgst
+    tax2_label: enum:cgst, igst, sgst
+    invoice_status: enum:"paid", "unpaid"
+    SoftDeletes
+    relationships:
+        belongsTo: Task
+        hasMany: Receipt
+        
+  Receipt:
+    payment_date: date
+    paid_in_full: boolean
+    amount_paid: decimal:8,2
+    balance: decimal:8,2
+    payment_method: string
+    refunded: boolean default:false
+    SoftDeletes
+    relationships:
+          belongsTo: Invoice

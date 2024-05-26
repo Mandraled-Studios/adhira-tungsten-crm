@@ -1,0 +1,31 @@
+created:
+    - database/factories/ClientFactory.php
+    - database/factories/TaskTypeFactory.php
+    - database/factories/TaskFactory.php
+    - database/factories/TaskCheckpointFactory.php
+    - database/factories/WorkLogFactory.php
+    - database/factories/InvoiceFactory.php
+    - database/factories/ReceiptFactory.php
+    - database/migrations/2023_12_23_084338_create_clients_table.php
+    - database/migrations/2023_12_23_084339_create_task_types_table.php
+    - database/migrations/2023_12_23_084340_create_tasks_table.php
+    - database/migrations/2023_12_23_084341_create_task_checkpoints_table.php
+    - database/migrations/2023_12_23_084342_create_work_logs_table.php
+    - database/migrations/2023_12_23_084343_create_invoices_table.php
+    - database/migrations/2023_12_23_084344_create_receipts_table.php
+    - app/Models/Client.php
+    - app/Models/TaskType.php
+    - app/Models/Task.php
+    - app/Models/TaskCheckpoint.php
+    - app/Models/WorkLog.php
+    - app/Models/Invoice.php
+    - app/Models/Receipt.php
+models:
+    User: {  }
+    Client: { company_name: 'string:255', firm_type: 'string:255', pan_number: 'string:15', client_code: 'string:32 nullable', client_name: 'string:128 nullable', aadhar_number: 'string:12 nullable', mobile: 'string:15 nullable', whatsapp: 'string:15 nullable', email: 'string:234 nullable', alternate_email: 'string:254 nullable', website: 'string:128 nullable', address: 'string:255 nullable', city: 'string:64 nullable', state: 'string:64 nullable', country: 'string:64 nullable', pincode: 'string:10 nullable', tan_no: 'string:20 nullable', cin_no: 'string:20 nullable', gstin: 'string:16 nullable', auditor_group_id: 'id foreign:users', billing_at: 'string:128 nullable default:"Adhira Associates"', client_status: 'enum:active,inactive', softdeletes: SoftDeletes, relationships: { belongsTo: User } }
+    TaskType: { name: string, frequency: string, softdeletes: SoftDeletes }
+    Task: { code: 'string:10', assessment_year: 'string:30', status: 'enum:"Assigned", "In Progress", "On Hold" ,"Waiting to Invoice", "Completed"', duedate: datetime, assigned_user_id: 'unsignedBigInteger:20', frequency_override: 'string:128 nullable', billing_value: 'decimal:8,2 nullable', billing_company: 'enum:"Adhira Associates", "Perfect Tax Consultancy"', softdeletes: SoftDeletes, relationships: { belongsTo: 'TaskType, Client', hasMany: TaskCheckpoint } }
+    TaskCheckpoint: { softdeletes: SoftDeletes, relationships: { belongsTo: 'Task, User', hasOne: WorkLog } }
+    WorkLog: { message: text, softdeletes: SoftDeletes, relationships: { belongsTo: TaskCheckpoint } }
+    Invoice: { invoice_number: string, invoice_date: date, duedate: date, subtotal: 'decimal:8,2', tax1: 'decimal:8,2', tax2: 'decimal:8,2', total: 'decimal:8,2', tax1_label: 'enum:cgst, igst, sgst', tax2_label: 'enum:cgst, igst, sgst', invoice_status: 'enum:"paid", "unpaid"', softdeletes: SoftDeletes, relationships: { belongsTo: Task, hasMany: Receipt } }
+    Receipt: { payment_date: date, paid_in_full: boolean, amount_paid: 'decimal:8,2', balance: 'decimal:8,2', payment_method: string, refunded: 'boolean default:false', softdeletes: SoftDeletes, relationships: { belongsTo: Invoice } }

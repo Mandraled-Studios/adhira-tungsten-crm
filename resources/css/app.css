@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ms-generate-invoice-btn {
+    padding: 12px 20px;
+    background-color: #197bde;
+    color: white
+}
+
+.ms-bg-success {
+    background-color: #bbf7d0;
+    color: #065f46;
+}
