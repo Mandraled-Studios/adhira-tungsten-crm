@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Invoice;
+use App\Enums\BillingAt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomController;
 
@@ -25,7 +26,7 @@ Route::get('/print-invoice/{id}', function ($id) {
     $qrcode = "";
     $logo = "";
 
-    if($billing_at == "Adhira Associates") {
+    if($billing_at == BillingAt::ADHIRA) {
         $qrcode = "images/adhira-associates-qr-code.jpeg";
         $logo = "images/adhira-associates-logo.jpg";
         $address = "39-11, 2nd Floor, Ramani's Kalpaviusha Appartment Tatabad, 11th St, Ganthipuram, Coimbatore, Tamil Nadu 641012";
