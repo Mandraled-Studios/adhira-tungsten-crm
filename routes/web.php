@@ -21,7 +21,7 @@ Route::get('/print-invoice/{id}', function ($id) {
     $client = $invoice->task->client;
     
     $auditor = \App\Models\User::findOrFail($client->auditor_group_id);
-    $billing_at = ($client->billing_at || !empty($client->billing_at)) ? $client->billing_at : "Adhira Associates";
+    $billing_at = ($client->billing_at || !empty($client->billing_at)) ? $client->billing_at : BillingAt::ADHIRA;
     
     $qrcode = "";
     $logo = "";
