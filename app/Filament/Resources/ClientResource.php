@@ -107,7 +107,8 @@ class ClientResource extends Resource
                 Tables\Columns\TextColumn::make('client_code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('company_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('firm_type')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('auditorGroup.name')

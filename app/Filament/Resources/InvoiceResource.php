@@ -23,6 +23,7 @@ use App\Forms\Components\ClientInfo;
 use Illuminate\Support\Facades\Mail;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -391,7 +392,35 @@ class InvoiceResource extends Resource
                             "email" => $email,
                         ];
 
-                        Mail::to("mandraledstudios@gmail.com")->send(new SendInvoice($invoice, $client, $emailDetails));
+                        if($client->email) {
+                            $mail = Mail::to($client->email)->send(new SendInvoice($invoice, $client, $emailDetails));
+                            if($mail) {
+                                Notification::make()
+                                ->title('Invoice sent as email')
+                                ->body('to '.$client->email)
+                                ->success()
+                                ->icon('heroicon-o-check-circle')
+                                ->iconColor('success')
+                                ->duration(5000);
+                            } else {
+                                Notification::make()
+                                ->title('Email could not be sent')
+                                ->body('Please try again later')
+                                ->danger()
+                                ->icon('heroicon-o-x-circle')
+                                ->iconColor('danger')
+                                ->duration(5000);
+                            }
+                        } else {
+                            Notification::make()
+                            ->title('No email address!')
+                            ->body('Please add an email address for the client')
+                            ->alert()
+                            ->icon('heroicon-o-exclamation-triangle')
+                            ->iconColor('alert')
+                            ->duration(5000);
+                        }
+                        
                     })
             ])
             ->bulkActions([

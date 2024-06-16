@@ -6,6 +6,6 @@ enum InvoiceStatus : string {
     case Generated = 'Generated';
     case Emailed = 'Emailed'; 
     case Paid = 'Paid'; 
-    case Partial = 'Partially Paid'; 
-    case Refunded = 'Refunded'; 
+    // case Partial = 'Partially Paid'; 
+    // case Refunded = 'Refunded'; 
 }

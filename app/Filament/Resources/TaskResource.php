@@ -255,6 +255,9 @@ class TaskResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            // ->groups([
+            //     'auditor_group'
+            // ])
             ->filters([
                 Filter::make('completed_tasks')
                     ->label('Completed Tasks')
@@ -266,7 +269,7 @@ class TaskResource extends Resource
                     ->label('Overdue Tasks')
                     ->query(fn (Builder $query): Builder => $query->where([['duedate', '<', now()], ['status', '!=', 'Completed']])),
                 SelectFilter::make('under_auditor')
-                    ->relationship('client', 'auditor_group_id')
+                    ->relationship('auditor_group', 'name')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

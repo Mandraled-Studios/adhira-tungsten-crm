@@ -66,6 +66,7 @@ class SupportResource extends Resource
                                             'Resolved' => 'Resolved',
                                         ])
                                         ->default('Created')
+                                        ->selectablePlaceholder(false)
                                         ->disabled(!auth()->user()->isDev()),
                                     Forms\Components\Toggle::make('is_resolved')
                                         ->label('Has issue been resolved?')

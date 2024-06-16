@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Client;
 use App\Models\Invoice;
 use App\Enums\BillingAt;
 use App\Enums\AssessmentYear;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Task extends Model
 {
@@ -68,6 +70,20 @@ class Task extends Model
     public function assigned_user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_user_id');
+    }
+
+    public function auditor_group(): HasOneThrough
+    {
+        // $cli = $this->client; 
+        // return $cli->belongsTo(User::class);
+        return $this->hasOneThrough(
+            User::class,
+            Client::class,
+            'id',
+            'id',
+            'client_id',
+            'auditor_group_id'
+        );
     }
 
     public function taskCheckpoints(): HasMany

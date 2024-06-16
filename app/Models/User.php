@@ -8,6 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable
 {
@@ -60,5 +61,15 @@ class User extends Authenticatable
 
     public function isStaff() {
         return $this->role->value == 'Staff';
+    }
+
+    public function tasks(): HasManyThrough
+    {
+        return $this->hasManyThrough(Task::class, 
+                                     Client::class, 
+                                    'auditor_group_id',
+                                    'client_id',
+                                    'id',
+                                    'id');
     }
 }
