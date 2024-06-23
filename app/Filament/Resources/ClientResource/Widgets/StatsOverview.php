@@ -23,10 +23,10 @@ class StatsOverview extends BaseWidget
         return [
             Stat::make('Total Clients', Client::count())
                 ->description('Active: '.$active.' | Inactive: '.$inactive),
-            Stat::make('SK Clients', Client::where('auditor_group_id', 3)->count())
-                ->description('This Month: '.$sk),
             Stat::make('MK Clients', Client::where('auditor_group_id', 4)->count())
                 ->description('This Month: '.$mk),
+            Stat::make('SK Clients', Client::where('auditor_group_id', 3)->count())
+                ->description('This Month: '.$sk),
             Stat::make('HK Clients', Client::where('auditor_group_id', 5)->count())
                 ->description('This Month: '.$hk),
         ];

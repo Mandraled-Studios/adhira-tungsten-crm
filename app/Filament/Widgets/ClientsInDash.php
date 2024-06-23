@@ -46,15 +46,15 @@ class ClientsInDash extends BaseWidget
         return [
             Stat::make('Total Clients', Client::count())
                 ->description('Active: '.$active.' | Inactive: '.$inactive),
+            Stat::make('MK Clients', Client::where('auditor_group_id', 4)->count())
+                ->description('This Month: '.$mk)
+                ->descriptionColor($mkColor),
             Stat::make('SK Clients', Client::where('auditor_group_id', 3)->count())
                 ->description('This Month: '.$sk)
                 ->descriptionColor($skColor),
             Stat::make('HK Clients', Client::where('auditor_group_id', 5)->count())
                 ->description('This Month: '.$hk)
                 ->descriptionColor($hkColor),
-            Stat::make('MK Clients', Client::where('auditor_group_id', 4)->count())
-                ->description('This Month: '.$mk)
-                ->descriptionColor($mkColor),
         ];
     }
 }

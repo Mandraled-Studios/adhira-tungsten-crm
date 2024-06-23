@@ -51,7 +51,8 @@ class ClientResource extends Resource
                     ->options(FirmType::class)
                     ->required(),
                 Forms\Components\TextInput::make('pan_number')
-                    ->maxLength(15),
+                    ->maxLength(15)
+                    ->required(),
                 Forms\Components\TextInput::make('client_code')
                     ->maxLength(32),
                 Forms\Components\TextInput::make('client_name')

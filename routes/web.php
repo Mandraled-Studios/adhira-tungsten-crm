@@ -25,42 +25,36 @@ Route::get('/print-invoice/{id}', function ($id) {
     
     $qrcode = "";
     $logo = "";
+    $address = "39-11, 2nd Floor, Ramani's Kalpaviusha Appartment Tatabad, 11th St, Ganthipuram, Coimbatore, Tamil Nadu 641012";
 
     if($billing_at == BillingAt::ADHIRA) {
         $qrcode = "images/adhira-associates-qr-code.jpeg";
         $logo = "images/adhira-associates-logo.jpg";
-        $address = "39-11, 2nd Floor, Ramani's Kalpaviusha Appartment Tatabad, 11th St, Ganthipuram, Coimbatore, Tamil Nadu 641012";
         $phone = "+919750835150";
         $email = "info@adhiraassociates.com";
-    } else {
-        if($auditor) {
-            switch($auditor->name) {
-                case "SK": $qrcode = "images/perfect-tax-consultancy-qr-code-sk.jpeg";
-                            $logo = "images/perfect-global-services-logo.jpg";
-                            $address = "";
-                            $phone = "";
-                            $email = "";
-                            break;
-                case "HK": $qrcode = "images/perfect-tax-consultancy-qr-code-hk.jpeg";
-                            $logo = "images/perfect-tax-consultancy-logo.jpg";
-                            $address = "2nd Floor, NGN Street, New Sidhapudhur, Coimbatore, Tamil Nadu 641044";
-                            $phone = "";
-                            $email = "";
-                            break;
-                case "MK": $qrcode = "images/perfect-tax-consultancy-qr-code-mk.jpeg";
-                            $logo = "images/perfect-tax-consultancy-logo.jpg";
-                            $address = "2nd Floor, NGN Street, New Sidhapudhur, Coimbatore, Tamil Nadu 641044";
-                            $phone = "";
-                            $email = "";
-                            break;
-                default: $qrcode = "images/adhira-associates-qr-code.jpeg"; 
-                            $logo = "images/adhira-associates-logo.jpg";
-                            $address = "39-11, 2nd Floor, Ramani's Kalpaviusha Appartment Tatabad, 11th St, Ganthipuram, Coimbatore, Tamil Nadu 641012";
-                            $phone = "+919750835150";
-                            $email = "info@adhiraassociates.com";
-                            break;
-            }
+    } elseif($billing_at == BillingAt::PERFECT) {
+        $logo = "images/perfect-tax-consultancy-logo.jpg";
+        $phone = "";
+        $email = "";
+
+        switch($auditor->name) {
+            case "HK": $qrcode = "images/perfect-tax-consultancy-qr-code-hk.jpeg";      
+                        break;
+            case "MK": $qrcode = "images/perfect-tax-consultancy-qr-code-mk.jpeg";
+                        break;
+            default: $qrcode = "images/perfect-tax-consultancy-qr-code-mk.jpeg"; 
+                     break;
         }
+    } elseif($billing_at == BillingAt::PERFECT_GLOBAL) {
+        $logo = "images/perfect-global-services-logo.jpg";
+        $qrcode = "images/perfect-tax-consultancy-qr-code-sk.jpeg";
+        $phone = "";
+        $email = "";
+    } else {
+        $qrcode = "images/adhira-associates-qr-code.jpeg";
+        $logo = "images/adhira-associates-logo.jpg";
+        $phone = "+919750835150";
+        $email = "info@adhiraassociates.com";
     }
 
     $emailDetails = [

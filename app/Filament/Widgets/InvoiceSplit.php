@@ -116,15 +116,15 @@ class InvoiceSplit extends BaseWidget
             Stat::make('Total Invoice Amount (this FY)', Number::currency($invoice_total, 'INR'))
                   ->description('This Month: '.$this_month_total )
                   ->descriptionColor($thisMonthColor),
+            Stat::make('Invoice Amount This FY By MK', Number::currency($total_mk, 'INR'))
+                  ->description('This Month: '.Number::currency($month_mk, 'INR'))
+                  ->descriptionColor($mkMonthColor),
             Stat::make('Invoice Amount This FY By SK', Number::currency($total_sk, 'INR'))
                   ->description('This Month: '.Number::currency($month_sk, 'INR'))
                   ->descriptionColor($skMonthColor),
             Stat::make('Invoice Amount This FY By HK', Number::currency($total_hk, 'INR'))
                   ->description('This Month: '.Number::currency($month_hk, 'INR'))
                   ->descriptionColor($hkMonthColor),
-            Stat::make('Invoice Amount This FY By MK', Number::currency($total_mk, 'INR'))
-                  ->description('This Month: '.Number::currency($month_mk, 'INR'))
-                  ->descriptionColor($mkMonthColor),
         ];
     }
 }

@@ -73,10 +73,10 @@ class ReceiptCount extends BaseWidget
 
         return [
             Stat::make('Payments This FY', Number::currency($payment_total, 'INR'))
-                  ->description('SK: '.Number::currency($total_sk, 'INR').' / HK: '.Number::currency($total_hk, 'INR').' / MK: '.Number::currency($total_mk, 'INR')),
+                  ->description('MK: '.Number::currency($total_mk, 'INR').' / SK: '.Number::currency($total_sk, 'INR').' / HK: '.Number::currency($total_hk, 'INR')),
             
             Stat::make('Payments This Month', Number::currency($payment_monthly, 'INR'))
-                  ->description('SK: '.Number::currency($month_sk, 'INR').' / HK: '.Number::currency($month_hk, 'INR').' / MK: '.Number::currency($month_mk, 'INR')),
+                  ->description('MK: '.Number::currency($month_mk, 'INR').' / SK: '.Number::currency($month_sk, 'INR').' / HK: '.Number::currency($month_hk, 'INR')),
         ];
     }
 }

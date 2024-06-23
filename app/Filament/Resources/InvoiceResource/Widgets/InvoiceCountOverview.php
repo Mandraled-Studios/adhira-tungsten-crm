@@ -99,13 +99,13 @@ class InvoiceCountOverview extends BaseWidget
         
         return [
             Stat::make('Invoices This FY', $invoice_total )
-                  ->description('SK: '.$total_sk.' / HK: '.$total_hk.' / MK: '.$total_mk),
+                  ->description('MK: '.$total_mk.' / SK: '.$total_sk.' / HK: '.$total_hk),
 
             Stat::make('Invoices This Month', $invoice_monthly )
-                  ->description('SK: '.$month_sk.' / HK: '.$month_hk.' / MK: '.$month_mk),
+                  ->description('MK: '.$month_mk.' / SK: '.$month_sk.' / HK: '.$month_hk),
             
             Stat::make('Invoices Not Paid', Invoice::where('invoice_status', '!=', 'Paid')->count())
-                  ->description('SK: '.$unpaid_sk.' / HK: '.$unpaid_hk.' / MK: '.$unpaid_mk),
+                  ->description('MK: '.$unpaid_mk.' / SK: '.$unpaid_sk.' / HK: '.$unpaid_hk),
         ];
     }
 }
