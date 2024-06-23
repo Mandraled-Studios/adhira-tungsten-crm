@@ -155,7 +155,9 @@ class TaskResource extends Resource
                 Forms\Components\Select::make('assigned_user_id')
                     ->options(User::all()->pluck('name', 'id'))
                     ->label('Assign To User')
-                    ->required(),
+                    ->required()
+                    ->disabled(! auth()->user()->isAuditor() && ! auth()->user()->isDev())
+                    ->dehydrated(),
                 Forms\Components\Select::make('task_type_id')
                     ->searchable()
                     ->disabled(! auth()->user()->isAuditor() && ! auth()->user()->isDev())

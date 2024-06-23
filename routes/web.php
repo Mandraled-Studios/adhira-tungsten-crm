@@ -34,22 +34,25 @@ Route::get('/print-invoice/{id}', function ($id) {
         $email = "info@adhiraassociates.com";
     } elseif($billing_at == BillingAt::PERFECT) {
         $logo = "images/perfect-tax-consultancy-logo.jpg";
-        $phone = "";
-        $email = "";
-
         switch($auditor->name) {
-            case "HK": $qrcode = "images/perfect-tax-consultancy-qr-code-hk.jpeg";      
+            case "HK":  $qrcode = "images/perfect-tax-consultancy-qr-code-hk.jpeg";  
+                        $phone  = "+919944699337";
+                        $email  = "harish@adhiraassociates.com";
                         break;
-            case "MK": $qrcode = "images/perfect-tax-consultancy-qr-code-mk.jpeg";
+            case "MK":  $qrcode = "images/perfect-tax-consultancy-qr-code-mk.jpeg";
+                        $phone  = "+919944699775";  
+                        $email  = "manoj@adhiraassociates.com";
                         break;
-            default: $qrcode = "images/perfect-tax-consultancy-qr-code-mk.jpeg"; 
+            default: $qrcode = "images/perfect-tax-consultancy-qr-code-mk.jpeg";
+                     $phone = "+919750835150";
+                     $email = "info@adhiraassociates.com"; 
                      break;
         }
     } elseif($billing_at == BillingAt::PERFECT_GLOBAL) {
         $logo = "images/perfect-global-services-logo.jpg";
         $qrcode = "images/perfect-tax-consultancy-qr-code-sk.jpeg";
-        $phone = "";
-        $email = "";
+        $phone = "9944699455";
+        $email = "suresh@adhiraassociates.com";
     } else {
         $qrcode = "images/adhira-associates-qr-code.jpeg";
         $logo = "images/adhira-associates-logo.jpg";

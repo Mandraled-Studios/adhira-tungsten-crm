@@ -13,7 +13,7 @@ class CreateInvoice extends CreateRecord
 
     protected function afterCreate(): void
     {
-       $invoice = Invoice::latest()->first();
+       $invoice = $this->record;
        $invoice_task = $invoice->task;
        $invoice_task->update([
             'invoice_id' => $invoice->id,

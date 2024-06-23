@@ -26,6 +26,7 @@ class Receipt extends Model
         'payment_method',
         'refunded',
         'invoice_id',
+        'auditor_id'
     ];
 
     /**
@@ -41,6 +42,7 @@ class Receipt extends Model
         'balance' => 'decimal:2',
         'refunded' => 'boolean',
         'invoice_id' => 'integer',
+        'auditor_id' => 'integer',
         'payment_method' => PaymentMethods::class,
     ];
 
