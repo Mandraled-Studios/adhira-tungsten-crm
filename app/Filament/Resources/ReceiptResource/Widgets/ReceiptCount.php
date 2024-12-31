@@ -29,7 +29,7 @@ class ReceiptCount extends BaseWidget
 
         //Auditors
         $sk = User::where('name', 'SK')->first();
-        $hk = User::where('name', 'HK')->first();
+        //$hk = User::where('name', 'HK')->first();
         $mk = User::where('name', 'MK')->first();
         
         $sk_query = DB::table('clients')
@@ -45,6 +45,7 @@ class ReceiptCount extends BaseWidget
         $month_sk = $sk_query->whereBetween('payment_date', [$month_start, $month_end])
                         ->sum('amount_paid');
 
+        /*
         $hk_query = DB::table('clients')
                         ->join('tasks', 'clients.id', '=', 'tasks.client_id')
                         ->join('invoices', 'tasks.id', '=', 'invoices.task_id')
@@ -57,6 +58,7 @@ class ReceiptCount extends BaseWidget
                         ->sum('amount_paid');
         $month_hk = $hk_query->whereBetween('payment_date', [$month_start, $month_end])
                         ->sum('amount_paid');
+        */
 
         $mk_query = DB::table('clients')
                         ->leftjoin('tasks', 'clients.id', '=', 'tasks.client_id')
@@ -73,10 +75,10 @@ class ReceiptCount extends BaseWidget
 
         return [
             Stat::make('Payments This FY', Number::currency($payment_total, 'INR'))
-                  ->description('MK: '.Number::currency($total_mk, 'INR').' / SK: '.Number::currency($total_sk, 'INR').' / HK: '.Number::currency($total_hk, 'INR')),
+                  ->description('MK: '.Number::currency($total_mk, 'INR').' / SK: '.Number::currency($total_sk, 'INR')),
             
             Stat::make('Payments This Month', Number::currency($payment_monthly, 'INR'))
-                  ->description('MK: '.Number::currency($month_mk, 'INR').' / SK: '.Number::currency($month_sk, 'INR').' / HK: '.Number::currency($month_hk, 'INR')),
+                  ->description('MK: '.Number::currency($month_mk, 'INR').' / SK: '.Number::currency($month_sk, 'INR')),
         ];
     }
 }

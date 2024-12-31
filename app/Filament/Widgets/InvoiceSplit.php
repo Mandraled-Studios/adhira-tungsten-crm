@@ -38,7 +38,7 @@ class InvoiceSplit extends BaseWidget
 
         //Auditors
         $sk = User::where('name', 'SK')->first();
-        $hk = User::where('name', 'HK')->first();
+        //$hk = User::where('name', 'HK')->first();
         $mk = User::where('name', 'MK')->first();
         
         $sk_query = DB::table('clients')
@@ -53,6 +53,7 @@ class InvoiceSplit extends BaseWidget
         $month_sk = $sk_query->whereBetween('invoice_date', [$month_start, $month_end])
                             ->sum('total');
 
+        /*
         $hk_query = DB::table('clients')
                         ->join('tasks', 'clients.id', '=', 'tasks.client_id')
                         ->join('invoices', 'tasks.id', '=', 'invoices.task_id')
@@ -64,6 +65,7 @@ class InvoiceSplit extends BaseWidget
                         ->sum('total');
         $month_hk = $hk_query->whereBetween('invoice_date', [$month_start, $month_end])
                             ->sum('total');
+                            */
 
         $mk_query = DB::table('clients')
                         ->join('tasks', 'clients.id', '=', 'tasks.client_id')
@@ -93,6 +95,7 @@ class InvoiceSplit extends BaseWidget
             $skMonthColor = 'success';
         }
 
+        /*
         if($month_hk < 10000) {
             $hkMonthColor = 'danger';
         } elseif($month_hk < 20000) {
@@ -100,6 +103,7 @@ class InvoiceSplit extends BaseWidget
         } else {
             $hkMonthColor = 'success';
         }
+            */
 
         if($month_mk < 10000) {
             $mkMonthColor = 'danger';
@@ -122,9 +126,11 @@ class InvoiceSplit extends BaseWidget
             Stat::make('Invoice Amount This FY By SK', Number::currency($total_sk, 'INR'))
                   ->description('This Month: '.Number::currency($month_sk, 'INR'))
                   ->descriptionColor($skMonthColor),
+            /*
             Stat::make('Invoice Amount This FY By HK', Number::currency($total_hk, 'INR'))
                   ->description('This Month: '.Number::currency($month_hk, 'INR'))
                   ->descriptionColor($hkMonthColor),
+                  */
         ];
     }
 }

@@ -53,7 +53,7 @@ class InvoiceCountInDash extends BaseWidget
 
         //Auditors
         $sk = User::where('name', 'SK')->first();
-        $hk = User::where('name', 'HK')->first();
+        //$hk = User::where('name', 'HK')->first();
         $mk = User::where('name', 'MK')->first();
         
         $sk_query = DB::table('clients')
@@ -71,6 +71,7 @@ class InvoiceCountInDash extends BaseWidget
                         ->where('invoices.status', '!=', 'Paid' )
                         ->count();
 
+        /*
         $hk_query = DB::table('clients')
                         ->join('tasks', 'clients.id', '=', 'tasks.client_id')
                         ->join('invoices', 'tasks.id', '=', 'invoices.task_id')
@@ -85,6 +86,7 @@ class InvoiceCountInDash extends BaseWidget
         $unpaid_hk = $hk_query->whereBetween('invoice_date', [$year_start, $year_end])
                         ->where('invoices.status', '!=', 'Paid' )
                         ->count();
+                    */
 
         $mk_query = DB::table('clients')
                         ->join('tasks', 'clients.id', '=', 'tasks.client_id')
@@ -103,13 +105,13 @@ class InvoiceCountInDash extends BaseWidget
         
         return [
             Stat::make('Invoices This FY', $invoice_total )
-                  ->description('MK: '.$total_mk.' / SK: '.$total_sk.' / HK: '.$total_hk),
+                  ->description('MK: '.$total_mk.' / SK: '.$total_sk),
 
             Stat::make('Invoices This Month', $invoice_monthly )
-                  ->description('MK: '.$month_mk.' / SK: '.$month_sk.' / HK: '.$month_hk),
+                  ->description('MK: '.$month_mk.' / SK: '.$month_sk),
             
             Stat::make('Invoices Not Paid', Invoice::where('invoice_status', '!=', 'Paid')->count())
-                  ->description('MK: '.$unpaid_mk.' / SK: '.$unpaid_sk.' / HK: '.$unpaid_hk),
+                  ->description('MK: '.$unpaid_mk.' / SK: '.$unpaid_sk),
         ];
     }
 }

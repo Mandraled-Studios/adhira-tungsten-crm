@@ -17,18 +17,20 @@ class StatsOverview extends BaseWidget
         $inactive = Client::where('client_status', 0)->count();
         
         $sk = Client::where('auditor_group_id', 3)->whereBetween('created_at', [$month_start, $month_end])->count();
-        $mk = Client::where('auditor_group_id', 4)->whereBetween('created_at', [$month_start, $month_end])->count();
-        $hk = Client::where('auditor_group_id', 5)->whereBetween('created_at', [$month_start, $month_end])->count();
+        $mk = Client::where('auditor_group_id', 5)->whereBetween('created_at', [$month_start, $month_end])->count();
+        //$hk = Client::where('auditor_group_id', 5)->whereBetween('created_at', [$month_start, $month_end])->count();
         
         return [
             Stat::make('Total Clients', Client::count())
                 ->description('Active: '.$active.' | Inactive: '.$inactive),
-            Stat::make('MK Clients', Client::where('auditor_group_id', 4)->count())
+            Stat::make('MK Clients', Client::where('auditor_group_id', 5)->count())
                 ->description('This Month: '.$mk),
             Stat::make('SK Clients', Client::where('auditor_group_id', 3)->count())
                 ->description('This Month: '.$sk),
+            /*
             Stat::make('HK Clients', Client::where('auditor_group_id', 5)->count())
                 ->description('This Month: '.$hk),
+                */
         ];
     }
 }

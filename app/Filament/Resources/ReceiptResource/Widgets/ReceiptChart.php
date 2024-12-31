@@ -23,7 +23,7 @@ class ReceiptChart extends ChartWidget
     {
         //Auditors
         $sk = User::where('name', 'SK')->first();
-        $hk = User::where('name', 'HK')->first();
+        //$hk = User::where('name', 'HK')->first();
         $mk = User::where('name', 'MK')->first();
 
         $totalData = Trend::model(Receipt::class)
@@ -53,6 +53,7 @@ class ReceiptChart extends ChartWidget
             ->perMonth()
             ->sum('amount_paid');
 
+        /*
         $hkData = Trend::query(Receipt::where('auditor_id', '=', $hk->id))
             ->dateColumn('payment_date')
             ->between(
@@ -61,7 +62,7 @@ class ReceiptChart extends ChartWidget
             )
             ->perMonth()
             ->sum('amount_paid');
-    
+        */
 
         return [
             'datasets' => [
@@ -83,12 +84,13 @@ class ReceiptChart extends ChartWidget
                     'backgroundColor' => '#f36efa',
                     'borderColor' => '#f36efa',
                 ],
+                /*
                 [
                     'label' => 'HK Receipts',
                     'data' => $hkData->map(fn (TrendValue $value) => $value->aggregate),
                     'backgroundColor' => '#affa89',
                     'borderColor' => '#affa89',
-                ],
+                ],*/
             ],
             'labels' => $totalData->map(fn (TrendValue $value) => $value->date),
         ];

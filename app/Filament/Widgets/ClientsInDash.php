@@ -19,42 +19,46 @@ class ClientsInDash extends BaseWidget
         $inactive = Client::where('client_status', 0)->count();
         
         $sk = Client::where('auditor_group_id', 3)->whereBetween('created_at', [$month_start, $month_end])->count();
-        $mk = Client::where('auditor_group_id', 4)->whereBetween('created_at', [$month_start, $month_end])->count();
-        $hk = Client::where('auditor_group_id', 5)->whereBetween('created_at', [$month_start, $month_end])->count();
+        $mk = Client::where('auditor_group_id', 5)->whereBetween('created_at', [$month_start, $month_end])->count();
+        //$hk = Client::where('auditor_group_id', 5)->whereBetween('created_at', [$month_start, $month_end])->count();
 
         $winner = NULL;
         $skColor = "danger";
-        $hkColor = "danger";
+        //$hkColor = "danger";
         $mkColor = "danger";
 
-        if(max($sk, $hk, $mk) == $sk) {
+        if(max($sk, $mk) == $sk) {
             $skColor = "success";
-        } elseif(max($sk, $hk, $mk) == $hk) {
-            $hkColor = "success";
-        } else {
+        } 
+        // elseif(max($sk, $hk, $mk) == $hk) {
+        //     $hkColor = "success";
+        // } 
+        else {
             $mkColor = "success";
         }
 
-        if(min($sk, $hk, $mk) == $sk) {
+        if(min($sk, $mk) == $sk) {
             $skColor = "danger";
-        } elseif(min($sk, $hk, $mk) == $hk) {
-            $hkColor = "danger";
-        } else {
+        } 
+        // elseif(min($sk, $hk, $mk) == $hk) {
+        //     $hkColor = "danger";
+        // } 
+        else {
             $mkColor = "danger";
         }
 
         return [
             Stat::make('Total Clients', Client::count())
                 ->description('Active: '.$active.' | Inactive: '.$inactive),
-            Stat::make('MK Clients', Client::where('auditor_group_id', 4)->count())
+            Stat::make('MK Clients', Client::where('auditor_group_id', 5)->count())
                 ->description('This Month: '.$mk)
                 ->descriptionColor($mkColor),
             Stat::make('SK Clients', Client::where('auditor_group_id', 3)->count())
                 ->description('This Month: '.$sk)
                 ->descriptionColor($skColor),
-            Stat::make('HK Clients', Client::where('auditor_group_id', 5)->count())
+            /* Stat::make('HK Clients', Client::where('auditor_group_id', 5)->count())
                 ->description('This Month: '.$hk)
-                ->descriptionColor($hkColor),
+                ->descriptionColor($hkColor), */
         ];
     }
 }
