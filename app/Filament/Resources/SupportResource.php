@@ -78,7 +78,8 @@ class SupportResource extends Resource
                                     Forms\Components\FileUpload::make('file_attachment_1')
                                         ->image()
                                         ->imageEditor(),
-                                    Forms\Components\FileUpload::make('file_attachment_2'),
+                                    Forms\Components\FileUpload::make('file_attachment_2')
+                                        ->downloadable(),
                             ]),
                         ])->columnSpan(1),
                 ])
