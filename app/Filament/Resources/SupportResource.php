@@ -67,7 +67,8 @@ class SupportResource extends Resource
                                         ])
                                         ->default('Created')
                                         ->selectablePlaceholder(false)
-                                        ->disabled(!auth()->user()->isDev()),
+                                        ->disabled(!auth()->user()->isDev())
+                                        ->dehydrated(),
                                     Forms\Components\Toggle::make('is_resolved')
                                         ->label('Has issue been resolved?')
                                         ->inline(false),
