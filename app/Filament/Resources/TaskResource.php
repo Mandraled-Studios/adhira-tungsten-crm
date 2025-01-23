@@ -133,6 +133,7 @@ class TaskResource extends Resource
                         '2022-23' => AssessmentYear::Y202223->value, 
                         '2023-24' => AssessmentYear::Y202324->value, 
                         '2024-25' => AssessmentYear::Y202425->value,
+                        '2025-26' => AssessmentYear::Y202526->value,
                     ]),
                 Forms\Components\Select::make('status')
                     ->required()
@@ -233,14 +234,18 @@ class TaskResource extends Resource
                     ->exists('assigned_user')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('frequency_override')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('billing_status')
-                    ->boolean(),
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('billing_value')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('billing_company')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('taskType.name')
                     ->numeric()
                     ->sortable(),
@@ -271,7 +276,12 @@ class TaskResource extends Resource
                     ->label('Overdue Tasks')
                     ->query(fn (Builder $query): Builder => $query->where([['duedate', '<', now()], ['status', '!=', 'Completed']])),
                 SelectFilter::make('under_auditor')
-                    ->relationship('auditor_group', 'name')
+                    ->relationship('auditor_group', 'name'),
+                SelectFilter::make('tasktype')
+                    ->relationship('taskType', 'name'),
+                SelectFilter::make('assigned_to')
+                    ->label('Assigned To User')
+                    ->relationship('assigned_user', 'name')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -29,6 +29,7 @@ enum AssessmentYear : string implements HasLabel {
     case Y202223 = '2022-23'; 
     case Y202324 = '2023-24'; 
     case Y202425 = '2024-25'; 
+    case Y202526 = '2025-26'; 
 
     public function getLabel(): ?string
     {
