@@ -33,7 +33,9 @@ class TaskResource extends Resource
 
     protected static ?string $navigationGroup = "Tasks";
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = "Tasks Database";
 
     public static function form(Form $form): Form
     {
@@ -194,8 +196,9 @@ class TaskResource extends Resource
                     ->required(),
                 Forms\Components\Toggle::make('billing_status')
                     ->inline(false)
-                    ->disabled(! auth()->user()->isAuditor() && ! auth()->user()->isDev())
-                    ->live(),
+                    ->disabled()
+                    ->live()
+                    ->default(true),
                 Forms\Components\TextInput::make('billing_value')
                     ->numeric()
                     ->disabled(! auth()->user()->isAuditor() && ! auth()->user()->isDev())
@@ -205,7 +208,8 @@ class TaskResource extends Resource
                         } else {
                             return true;
                         }
-                     }),
+                     })
+                     ->default(0.0),
                 Forms\Components\Hidden::make('completed_by')
                      ->default(null),
 
@@ -262,9 +266,7 @@ class TaskResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            // ->groups([
-            //     'auditor_group'
-            // ])
+            ->paginated([10, 20, 30])
             ->filters([
                 Filter::make('completed_tasks')
                     ->label('Completed Tasks')
@@ -317,8 +319,9 @@ class TaskResource extends Resource
         return [
             'index' => Pages\ListTasks::route('/'),
             'create' => Pages\CreateTask::route('/create'),
-            'edit' => Pages\EditTask::route('/{record}/edit'),
+            'open' => Pages\OpenTasks::route('/open'),
             'completed' => Pages\CompletedTasks::route('/completed'),
+            'edit' => Pages\EditTask::route('/{record}/edit'),
         ];
     }
 }

@@ -38,17 +38,20 @@ class AppPanelProvider extends PanelProvider
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('images/favicon.png'))
             ->font('Montserrat', provider: GoogleFontProvider::class)
+            ->maxContentWidth('full')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 //Pages\Dashboard::class,
                 Resources\TaskResource\Pages\CompletedTasks::class,
+                Resources\TaskResource\Pages\OpenTasks::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 //Widgets\AccountWidget::class,
                 //Widgets\FilamentInfoWidget::class,
             ])
+            ->sidebarCollapsibleOnDesktop()
             ->databaseNotifications()
             ->middleware([
                 EncryptCookies::class,
@@ -63,7 +66,8 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->viteTheme('resources/css/filament/app/theme.css'); ;
     }
 
     public function register(): void {

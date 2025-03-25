@@ -125,7 +125,8 @@ class InvoiceResource extends Resource
         } else {
             $ass_year = substr(date('Y'), 2, 2).'-'.substr(date('Y')+1,2);
         }
-        $prefix = $auditName.'/'.$ass_year.'/';
+        //$prefix = $auditName.'/'.$ass_year.'/';
+        $prefix = 'INV/'.$ass_year.'/';
         $nextInvoiceId = (int)$lastInvoiceID+1;
         $invoiceNumber = $prefix.str_pad($nextInvoiceId, 5, "0", STR_PAD_LEFT);
         

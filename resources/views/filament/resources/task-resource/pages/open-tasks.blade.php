@@ -1,14 +1,5 @@
 <x-filament-panels::page>
-    <style>
-        .ms-generate-invoice-btn {
-            color: #197bde;
-            font-size: 14px;
-            font-weight: bold;
-            text-decoration: underline;
-            text-align: center;
-        }
-    </style>
-    {{-- 
+    {{--
     <table class="table w-full table-fixed border-collapse border border-slate-400">
         <thead>
             <tr>
@@ -22,35 +13,35 @@
             </tr>
         </thead>
         <tbody>
-            @if (count($completed) == 0)
+            @if (count($opentasks) == 0)
                 <tr>
-                    <td colspan="7" class="text-center border-collapse border border-slate-400 px-4 py-4"> No completed tasks available </td>
+                    <td colspan="7" class="text-center border-collapse border border-slate-400 px-4 py-4"> No open tasks available </td>
                 </tr>
             @else
-            @foreach ($completed as $compTask)
+            @foreach ($opentasks as $optask)
                 @php
-                   $task_type = \App\Models\TaskType::find($compTask->task_type_id);
+                   $task_type = \App\Models\TaskType::find($optask->task_type_id);
                    $task_type = $task_type ? $task_type : "N/A";
 
-                   $client = \App\Models\Client::find($compTask->client_id);
+                   $client = \App\Models\Client::find($optask->client_id);
                    $client = $client ? $client : "N/A";
 
                 @endphp
                 <tr>
-                    <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $compTask->code }} </td>
-                    <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $compTask->assessment_year }} </td>
-                    <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $compTask->billing_value }} </td>
-                    <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $compTask->duedate }} </td>
+                    <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $optask->code }} </td>
+                    <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $optask->assessment_year }} </td>
+                    <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $optask->billing_value }} </td>
+                    <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $optask->duedate }} </td>
                     <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $task_type->name ?? "N/A" }} </td>
                     <td class="text-center border-collapse border border-slate-400 px-4 py-4"> {{ $client->company_name ?? "N/A" }} </td>
                     <td class="text-center border-collapse border border-slate-400 px-1 py-4"> 
-                        <a class="ms-generate-invoice-btn" href="{{ route('filament.app.resources.invoices.create', ['task' => $compTask->id])}}"> Generate Invoice </a> 
+                        <a class="ms-generate-invoice-btn" href="{{ route('filament.app.resources.tasks.edit', ['record' => $optask->id])}}"> Edit Task </a> 
                     </td>
                 </tr>
             @endforeach
             @endif
         </tbody>
-    </table> 
+    </table>
     --}}
     {{ $this->table }}
 </x-filament-panels::page>

@@ -1,0 +1,11 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+.fi-simple-layout {
+    @apply bg-blue-500;
+    background-image: url('/images/adhira-crm-login-bg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
